@@ -1,37 +1,43 @@
 import React, { FC, useEffect, useState } from "react";
-import { Leboncoin } from "./index";
+import { Leboncoin, Offer } from "./index";
 
 import leboncoin from "./utils";
 
 export const LeboncoinProvider: FC = ({ children }) => {
-  const [offers, setOffers] = useState<any[]>([]);
+  const [nextPageLink, setNextPageLink] = useState<string>();
+  const [links, setLinks] = useState<string[]>([]);
 
   useEffect(() => {
     leboncoin
       .search({
         category: "9",
-        locations:
-          "Bayeux_14400__49.28074_-0.71924_3634,Caen_14000__49.18461_-0.37375_4167,Carentan-les-Marais_50500__49.2785_-1.29011_10000",
-        price: "25000-75000",
+        immo_sell_type: "old,new",
+        locations: "Caen_14000__49.18461_-0.37375_4167",
+        price: "75000-175000",
         real_estate_type: "2",
+        rooms: "3-max",
+        square: "30-max",
       })
-      .then(
-        async (urls) =>
-          urls.map((url) =>
-            leboncoin
-              .parseOffer(url)
-              .then((offer) =>
-                setOffers((prevOffers) => [...prevOffers, offer])
-              )
-          ),
-        console.error
-      );
+      .then((result) => {
+        setNextPageLink(result.nextPageLink);
+        setLinks(result.links);
+      }, console.error);
   }, []);
 
   return (
     <Leboncoin.Provider
       value={{
-        offers,
+        getAttribute: (key: string, offer?: Offer) =>
+          offer?.attributes.find((attribute) => attribute.key === key),
+        getOffer: leboncoin.getOffer,
+        hasMore: nextPageLink !== undefined,
+        links,
+        loadMore: () =>
+          nextPageLink &&
+          leboncoin.getLinks(nextPageLink).then((result) => {
+            setNextPageLink(result.nextPageLink);
+            setLinks((prevLinks) => [...prevLinks, ...result.links]);
+          }),
       }}
     >
       {children}

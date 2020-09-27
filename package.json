@@ -3,39 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
-    "@types/jsdom": "^16.2.3",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
+    "@types/jsdom": "^16.2.4",
+    "@types/node": "^12.12.62",
+    "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.0",
+    "@types/react-infinite-scroller": "^1.2.1",
     "axios": "^0.19.2",
     "axios-cache-adapter": "^2.5.0",
-    "bootstrap": "^4.5.0",
-    "husky": "^4.2.5",
-    "jsdom": "^16.2.2",
+    "bootstrap": "^4.5.2",
+    "gh-pages": "^3.1.0",
+    "jsdom": "^16.4.0",
     "node-sass": "^4.14.1",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.2",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
+    "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "stylelint": "^13.5.0",
-    "stylelint-config-prettier": "^8.0.1",
+    "react-infinite-scroller": "^1.2.4",
+    "react-lazily-render": "^1.2.0",
+    "react-scripts": "^3.4.3",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-prettier": "^1.1.2",
-    "tslint": "^6.1.2",
+    "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.3.0",
     "tslint-react": "^5.0.0",
-    "typescript": "~3.7.2"
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "PUBLIC_URL=\"/compare-cribs\" react-scripts build && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,21 +63,5 @@
     "extends": [
       "stylelint-prettier/recommended"
     ]
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "yarn lint:ts --fix"
-    ],
-    "src/**/*.{css,scss}": [
-      "yarn lint:css --fix"
-    ],
-    "src/**/*.{html,json,md,yml}": [
-      "prettier --write **/*.{json,md,yml}"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

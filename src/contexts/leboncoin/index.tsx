@@ -1,5 +1,13 @@
 import { createContext, useContext } from "react";
 
+export interface OfferAttribute {
+  key: string;
+  value: string;
+  key_label: string;
+  value_label: string;
+  generic: boolean;
+}
+
 export interface Offer {
   list_id: number;
   first_publication_date: string;
@@ -21,13 +29,7 @@ export interface Offer {
     urls_thumb: string[];
     urls_large: string[];
   };
-  attributes: {
-    key: string;
-    value: string;
-    key_label: string;
-    value_label: string;
-    generic: boolean;
-  }[];
+  attributes: OfferAttribute[];
   location: {
     country_id: string;
     region_id: string;
@@ -72,7 +74,11 @@ export interface Offer {
 }
 
 interface LeboncoinContext {
-  offers: Offer[];
+  hasMore: boolean;
+  links: string[];
+  getAttribute: (key: string, offer?: Offer) => OfferAttribute | undefined;
+  getOffer: (url: string) => Promise<Offer | undefined>;
+  loadMore: () => void;
 }
 
 export const Leboncoin = createContext<LeboncoinContext | null>(null);

@@ -1,15 +1,35 @@
-.OfferCard-attribute {
-  display: inline-block;
-  line-height: 1;
-  margin-right: 0.33rem;
-  small {
-    display: block;
-    opacity: 0.5;
+.OfferTable {
+  td {
+    height: 240px;
   }
-  &:hover {
-    cursor: default;
-    small {
-      opacity: 1;
+}
+.OfferRow {
+  .OfferRow-images {
+    margin: 0.5rem 0;
+  }
+  .OfferRow-body {
+    font-size: small;
+    line-height: 1;
+  }
+  .OfferRow-value {
+    width: 180px;
+    big {
+      font-weight: bold;
     }
+    .OfferRow-separator {
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+.carousel-item {
+  background-color: black;
+  width: 480px;
+  max-height: 360px;
+  img {
+    display: block;
+    max-width: 480px;
+    max-height: 360px;
+    margin: 0 auto;
   }
 }
