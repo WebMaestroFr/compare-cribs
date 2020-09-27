@@ -1,0 +1,15 @@
+.OfferCard-attribute {
+  display: inline-block;
+  line-height: 1;
+  margin-right: 0.33rem;
+  small {
+    display: block;
+    opacity: 0.5;
+  }
+  &:hover {
+    cursor: default;
+    small {
+      opacity: 1;
+    }
+  }
+}
