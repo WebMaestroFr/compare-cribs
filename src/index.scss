@@ -4,6 +4,12 @@
   }
 }
 .OfferRow {
+  .OfferRow-header {
+    width: 180px;
+    .OfferRow-separator {
+      margin: 0 0.5rem;
+    }
+  }
   .OfferRow-images {
     margin: 0.5rem 0;
   }
@@ -11,13 +17,14 @@
     font-size: small;
     line-height: 1;
   }
-  .OfferRow-value {
-    width: 180px;
-    big {
-      font-weight: bold;
-    }
-    .OfferRow-separator {
-      margin: 0 0.5rem;
+  .OfferAttributes {
+    p {
+      line-height: 1;
+      small {
+        display: block;
+        opacity: 0.5;
+        text-transform: uppercase;
+      }
     }
   }
 }
@@ -32,4 +39,8 @@
     max-height: 360px;
     margin: 0 auto;
   }
+}
+
+big {
+  font-weight: bold;
 }

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Leboncoin, Offer } from "./index";
+import { Leboncoin } from "./index";
 
 import leboncoin from "./utils";
 
@@ -27,8 +27,6 @@ export const LeboncoinProvider: FC = ({ children }) => {
   return (
     <Leboncoin.Provider
       value={{
-        getAttribute: (key: string, offer?: Offer) =>
-          offer?.attributes.find((attribute) => attribute.key === key),
         getOffer: leboncoin.getOffer,
         hasMore: nextPageLink !== undefined,
         links,

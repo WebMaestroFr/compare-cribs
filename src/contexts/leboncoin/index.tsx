@@ -76,7 +76,6 @@ export interface Offer {
 interface LeboncoinContext {
   hasMore: boolean;
   links: string[];
-  getAttribute: (key: string, offer?: Offer) => OfferAttribute | undefined;
   getOffer: (url: string) => Promise<Offer | undefined>;
   loadMore: () => void;
 }

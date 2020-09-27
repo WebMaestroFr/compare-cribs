@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 const Loader: FC = () => (
-  <td colSpan={3}>
+  <td colSpan={2}>
     <em>Loading...</em>
   </td>
 );
