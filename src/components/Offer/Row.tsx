@@ -1,23 +1,42 @@
-import React, { FC, useEffect, useState } from "react";
-import { Badge, Carousel } from "react-bootstrap";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import { Badge, Carousel, Form } from "react-bootstrap";
 
 import useLeboncoin, { Offer } from "../../contexts/leboncoin";
+import useFirebase, { FirebaseData } from "../../contexts/firebase";
 import OfferAttributes from "./Attributes";
 import Loader from "./Loader";
 
 const OfferRow: FC<{ link: string }> = ({ link }) => {
+  const { read, write } = useFirebase();
   const { getOffer } = useLeboncoin();
+
+  const linkMatch = link.match(/.*\/(.+?)\./);
+  const offerKey = linkMatch && linkMatch[1];
+
   const [offer, setOffer] = useState<Offer | undefined>();
+  const [data, setData] = useState<FirebaseData>();
+
   useEffect(() => {
-    console.count("FETCHING AND RENDERING OFFER");
-    getOffer(link).then(setOffer);
-  }, [getOffer, link]);
+    if (offerKey) {
+      getOffer(link).then(setOffer);
+      read(offerKey).then(setData, console.error);
+    }
+  }, [getOffer, link, offerKey, read]);
+
   const getAttribute = (key: string) =>
     offer?.attributes.find((attribute) => attribute.key === key);
   const square = getAttribute("square");
   const href = "https://www.leboncoin.fr" + link;
   const price = offer?.price[0];
   const squarePrice = square ? Number(price) / Number(square.value) : 0;
+
+  const handleChangeNote = offerKey
+    ? (event: ChangeEvent<HTMLTextAreaElement>) => {
+        const note = event.currentTarget.value;
+        write(offerKey, { note });
+      }
+    : undefined;
+
   return offer ? (
     <>
       <td>
@@ -52,7 +71,19 @@ const OfferRow: FC<{ link: string }> = ({ link }) => {
           {squarePrice.toFixed(2)} <small>€/m²</small>
         </Badge>
         <hr />
+        <strong>{offer.location.city}</strong>
         <OfferAttributes attributes={offer.attributes} />
+      </td>
+      <td>
+        <Form className="OfferRow-notes">
+          {data ? (
+            <Form.Control
+              as="textarea"
+              onChange={handleChangeNote}
+              defaultValue={data?.note}
+            />
+          ) : null}
+        </Form>
       </td>
     </>
   ) : (
